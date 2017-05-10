@@ -1,0 +1,55 @@
+plugins {
+  id 'org.jenkins-ci.jpi' version '0.22.0'
+}
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+      url "http://repo.jenkins-ci.org/releases/"
+    }
+}
+
+group = 'org.jenkins-ci.plugins'
+version = '1.2.0-SNAPSHOT'
+description = 'A description of your plugin'
+
+dependencies {
+    compile('io.nats:java-nats-streaming:0.4.1') {
+        exclude group: 'org.slf4j'
+    }
+}
+
+jenkinsPlugin {
+    // version of Jenkins core this plugin depends on, must be 1.420 or later
+    coreVersion = '2.58'
+
+    // ID of the plugin, defaults to the project name without trailing '-plugin'
+    shortName = 'jess'
+
+    // human-readable name of plugin
+    displayName = 'Jenkins Event Streams'
+
+    // plugin URL on GitHub, optional
+    gitHubUrl = 'https://github.com/wayofthepie/jess'
+
+    // use the plugin class loader before the core class loader, defaults to false
+    pluginFirstClassLoader = true
+
+    // optional list of package prefixes that your plugin doesn't want to see from core
+    maskClasses = 'groovy.grape org.apache.commons.codec'
+
+    // optional version number from which this plugin release is configuration-compatible
+    compatibleSinceVersion = '1.1.0'
+
+    // the output directory for the localizer task relative to the project root, defaults to the value shown
+    localizerOutputDir = "${project.buildDir}/generated-src/localizer"
+
+    // disable configuration of Maven Central, the local Maven cache and the Jenkins Maven repository, defaults to true
+    configureRepositories = false
+
+    // skip configuration of publications and repositories for the Maven Publishing plugin, defaults to true
+    configurePublishing = false
+
+    // plugin file extension, either 'jpi' or 'hpi', defaults to 'hpi'
+    fileExtension = 'hpi'
+}
